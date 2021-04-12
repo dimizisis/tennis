@@ -9,6 +9,11 @@ html {
 	scroll-behavior: smooth;
 }
 
+.category-icon {
+	width: 3rem;
+	height: 3rem;
+}
+
 body {
     position: relative;
     min-height: 100%;
@@ -34,6 +39,8 @@ h1 {
 }
 
 h2 {
+	display: grid;
+	overflow: auto;
 	text-align: center;
     font-family: "Oswald", sans-serif;
     color: #ddd;
@@ -183,11 +190,12 @@ table td:hover {
 }
 #footer .social-icon {
 	display: flex;
+	padding-bottom: 5rem;
 	margin-bottom: auto;
 }
 #footer .social-item {
 	height: fit-content;
-	width: content;
+	width: fit-content;
     text-align: center;
 	margin: auto;
 }
