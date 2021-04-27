@@ -1,3 +1,8 @@
+/* Typical properties start */
+@font-face {
+	font-family: "Source Sans Pro";
+	src: url("https://fonts.gstatic.com/s/sourcesanspro/v13/6xK3dSBYKcSV-LCoeQqfX1RYOo3qO67lqDY.woff2");
+  }
 
 html {
     background-image: linear-gradient(60deg,#5C258D 10%, #4389A2 100%);
@@ -53,30 +58,44 @@ h3 {
 
 /* Add a black background color to the top navigation */
 .topnav {
-  background-color: #1F2739;
-  overflow: hidden;
+  	background-color: #1F2739;
+  	overflow: hidden;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+  	float: left;
+  	color: #f2f2f2;
+  	text-align: center;
+  	padding: 14px 16px;
+  	text-decoration: none;
+  	font-size: 17px;
 }
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #ddd;
-  color: #1F2739;
+  	background-color: #ddd;
+  	color: #1F2739;
 }
 
 /* Add a color to the active/current link */
 .topnav a.active {
-  background-color: #ffffff;
-  color: #1F2739;
+  	background-color: #ffffff;
+  	color: #1F2739;
+}
+
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.sticky + .content {
+	padding-top: 60px;
+}
+
+.content {
+	padding: 16px;
 }
 
 /* Tooltip container */
@@ -132,14 +151,22 @@ h3 {
 }
 /* End Cover */
 
+section > div > img {
+	padding-top: 5rem;
+}
+
 /* Table */
 table {
 	text-align: left;
-	overflow: hidden;
+	overflow: auto;
 	width: 40%;
 	margin: 0 auto;
     display: table;
     padding: 0 0 8em 0;
+	border-collapse: collapse;
+  -webkit-overflow-scrolling: touch;
+  	border-spacing: 0;
+  	border: 1px solid #ddd;
 }
 
 table td {
@@ -226,6 +253,14 @@ table td:hover {
 }
 /* End Footer */
 
+th:hover {
+	background-color: #464A52;
+-webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	   -moz-box-shadow: 0 6px 6px -6px #0E1119;
+	        box-shadow: 0 6px 6px -6px #0E1119;
+	cursor: pointer;
+}
+
 @keyframes text_reveal_box {
 	50% {
 		width: 100%;
@@ -242,13 +277,16 @@ table td:hover {
 	}
 }
 
-@media only screen and (max-width: 720px) {
+@media all and (max-width: 720px) {
+	table {
+		overflow-x: scroll;
+	}
 	table th, table td {
 	  font-size: smaller;
 	}
 }
 
-@media only screen and (max-width: 250px) {
+@media all and (max-width: 250px) {
 	h1 {
 		font-size: 1.875em;
 	}

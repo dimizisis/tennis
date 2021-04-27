@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css">
   <title>Novak Djokovic Website</title>
+  <script src="index.js" defer></script>
 </head>
 
-<body>
+<body onload="setCurrentAge();">
     <!-- Header -->
     <section id="header">
-      <div class="topnav">
-         <a class="active" href="#index">Home</a>
-         <a href="#info">Basic Information</a>
-         <a href="#stats">Statistics</a>
-         <a href="#ranking">Ranking</a>
-         <a href="#footer">Contact</a>
+      <div id="navbar" class="topnav">
+         <a onclick="makeNavBarBtnActive('navhomebtn')" id="navhomebtn" class="navbtn" href="#header">Home</a>
+         <a onclick="makeNavBarBtnActive('navinfobtn')" id="navinfobtn" class="navbtn" href="#info">Basic Information</a>
+         <a onclick="makeNavBarBtnActive('navstatsbtn')" id="navstatsbtn" class="navbtn" href="#stats">Statistics</a>
+         <a onclick="makeNavBarBtnActive('navrankbtn')" id="navrankbtn" class="navbtn" href="#ranking">Ranking</a>
+         <a onclick="makeNavBarBtnActive('navfooterbtn')" id="navfooterbtn" class="navbtn" href="#footer">Contact</a>
        </div>
     </section>
     <!-- End Header -->
@@ -56,7 +57,7 @@
                         </tr>
                         <tr>
                             <th id="age">Age</th>
-                            <td>33</td>
+                            <td id="ageval"></td>
                         </tr>
                         <tr>
                             <th id="height">Height</th>
@@ -176,124 +177,118 @@
             <div><h3>General</h3></div>
             <tbody>
                <tr>
-                  <th id="year-th">Year</th>
-                  <th id="high-th">High</th>
-                  <th id="low-th">Low</th>
-                  <th id="end-th">End</th>
+                  <th onclick="sortTable(0)" id="year-th">Year</th>
+                  <th onclick="sortTable(1)" id="high-th">High</th>
+                  <th onclick="sortTable(2)" id="low-th">Low</th>
+                  <th onclick="sortTable(3)" id="end-th">End</th>
                </tr>
                <tr>
-                  <th>2003</th>
+                  <td>2003</td>
                   <td>660</td>
                   <td>774</td>
                   <td>679</td>
                </tr>
                <tr>
-                  <th>2004</th>
+                  <td>2004</td>
                   <td>184</td>
                   <td>681</td>
                   <td>186</td>
                </tr>
                <tr>
-                  <th>2005</th>
+                  <td>2005</td>
                   <td>75</td>
                   <td>188</td>
                   <td>78</td>
                </tr>
                <tr>
-                  <th>2006</th>
+                  <td>2006</td>
                   <td>16</td>
                   <td>81</td>
                   <td>16</td>
                </tr>
                <tr>
-                  <th>2007</th>
+                  <td>2007</td>
                   <td>3</td>
                   <td>16</td>
                   <td>3</td>
                </tr>
                <tr>
-                  <th>2008</th>
+                  <td>2008</td>
                   <td>3</td>
                   <td>3</td>
                   <td>3</td>
                </tr>
                <tr>
-                  <th>2009</th>
+                  <td>2009</td>
                   <td>3</td>
                   <td>4</td>
                   <td>3</td>
                </tr>
                <tr>
-                  <th>2010</th>
+                  <td>2010</td>
                   <td>2</td>
                   <td>3</td>
                   <td>3</td>
                </tr>
                <tr>
-                  <th>2011</th>
+                  <td>2011</td>
                   <td>1</td>
                   <td>3</td>
                   <td>1</td>
                </tr>
                <tr>
-                  <th>2012</th>
+                  <td>2012</td>
                   <td>1</td>
                   <td>2</td>
                   <td>1</td>
                </tr>
                <tr>
-                  <th>2013</th>
+                  <td>2013</td>
                   <td>1</td>
                   <td>2</td>
                   <td>2</td>
                </tr>
                <tr>
-                  <th>2014</th>
+                  <td>2014</td>
                   <td>1</td>
                   <td>2</td>
                   <td>1</td>
                </tr>
                <tr>
-                  <th>2015</th>
+                  <td>2015</td>
                   <td>1</td>
                   <td>1</td>
                   <td>1</td>
                </tr>
                <tr>
-                  <th>2016</th>
+                  <td>2016</td>
                   <td>1</td>
                   <td>2</td>
                   <td>2</td>
                </tr>
                <tr>
-                  <th>2017</th>
+                  <td>2017</td>
                   <td>2</td>
                   <td>12</td>
                   <td>12</td>
                </tr>
                <tr>
-                  <th>2018</th>
+                  <td>2018</td>
                   <td>1</td>
                   <td>22</td>
                   <td>1</td>
                </tr>
                <tr>
-                  <th>2019</th>
+                  <td>2019</td>
                   <td>1</td>
                   <td>2</td>
                   <td>2</td>
                </tr>
                <tr>
-                  <th>2020</th>
+                  <td>2020</td>
                   <td>1</td>
                   <td>2</td>
                   <td>1</td>
-               </tr>
-               <tr>
-                  <th>2021</th>
-                  <td>1</td>
-                  <td>1</td>
-                  <td></td>
                </tr>
             </tbody>
          </table>
@@ -302,24 +297,23 @@
 
     <!-- Footer -->
   <section id="footer">
-   <h1>Follow me on social media</h1>
-   <div class="footer container">
-     <div class="social-icon">
-       <div id="fb" class="social-item tooltip">
-         <a target="_blank" href="https://www.facebook.com/djokovicofficial"><img class="active" src="./images/icons/facebook-static.png" alt="fb"></a>
-         <span class="tooltiptext">Facebook</span>
-       </div>
-       <div id="insta" class="social-item tooltip">
-         <a target="_blank" href="https://www.instagram.com/djokernole/"><img class="active" src="./images/icons/instagram-static.png" alt="instagram"></a>
-         <span class="tooltiptext">Instagram</span>
-       </div>
-       <div class="social-item tooltip">
-         <a target="_blank" href="https://twitter.com/djokernole"><img class="active" src="./images/icons/twitter-static.png" alt="twitter"></a>
-         <span class="tooltiptext">Twitter</span>
-       </div>
-     </div>
-   </div>
- </section>
- <!-- End Footer -->
-
+      <h1>Follow me on social media</h1>
+      <div class="footer container">
+         <div class="social-icon">
+            <div id="fb" class="social-item tooltip">
+               <a target="_blank" href="https://www.facebook.com/djokovicofficial"><img class="active" src="./images/icons/facebook-static.png" alt="fb"></a>
+               <span class="tooltiptext">Facebook</span>
+            </div>
+         <div id="insta" class="social-item tooltip">
+            <a target="_blank" href="https://www.instagram.com/djokernole/"><img class="active" src="./images/icons/instagram-static.png" alt="instagram"></a>
+            <span class="tooltiptext">Instagram</span>
+         </div>
+            <div class="social-item tooltip">
+               <a target="_blank" href="https://twitter.com/djokernole"><img class="active" src="./images/icons/twitter-static.png" alt="twitter"></a>
+               <span class="tooltiptext">Twitter</span>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- End Footer -->
 </body>
