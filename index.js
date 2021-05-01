@@ -53,6 +53,7 @@ class TennisPlayer {
       let low = [{2003: 774}, {2004: 681}, {2005: 188}, {2006: 81}, {2007: 16}, {2008: 3}, {2009: 4}, {2010: 3}, {2011: 3}, {2012: 2}, {2013: 2}, {2014: 2}, {2015: 1}, {2016: 2}, {2017: 12}, {2018: 22}, {2019: 2}, {2020: 2}];
       let end = [{2003: 679}, {2004: 186}, {2005: 78}, {2006: 16}, {2007: 3}, {2008: 3}, {2009: 3}, {2010: 3}, {2011: 1}, {2012: 1}, {2013: 2}, {2014: 1}, {2015: 1}, {2016: 2}, {2017: 12}, {2018: 1}, {2019: 2}, {2020: 1}];
       this.ranking = new Ranking(high, low, end);
+      /* End Ranking */
 
   }
   
@@ -256,6 +257,8 @@ window.addEventListener('load', addSortingEventListeners);
 /* dd column visibility listeners */
 window.addEventListener('load', addVisibilityEventListeners);
 
+window.addEventListener('load', loadRankingChart.bind(null, player.ranking));
+
 /* ----------------- NAVIGATION BAR ----------------- */
 
 /* Add the sticky class to the navigation bar when you reach its scroll position. Remove 'sticky' when you leave the scroll position */
@@ -346,8 +349,8 @@ function sortTable(id, n) {
 function addVisibilityEventListeners () {
   Array.from(document.getElementsByClassName('th-icon')).forEach((icon) => {
     var colName = icon.id.substring(icon.id.lastIndexOf('-') + 1);
-    console.log(icon);
     icon.addEventListener('click', function (e) {
+      /* We only want the icon's event listener to be triggered, not its parent's (as events bubble to the highest point in the DOM) */
       e.stopPropagation();
       if (this.getAttribute('src').includes('invisible'))
         this.setAttribute('src', this.getAttribute('src').replace('invisible', 'visible'));
@@ -366,3 +369,62 @@ function addVisibilityEventListeners () {
 }
 
 /* ----------------- END COLUMN VISIBILITY ----------------- */
+
+function loadRankingChart (ranking) {
+
+  am4core.ready(function() {
+
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+    // Themes end
+    
+     // Create chart instance
+    var chart = am4core.create('chartdiv', am4charts.XYChart);
+    chart.responsive.enabled = true;
+    
+    var data = [];
+    for (let i=0; i<ranking.high.length; ++i) {
+      data[i] = {'year': Object.keys(ranking.high[i])[0], 'high': ranking.high[i][Object.keys(ranking.high[i])[0]], 'low': ranking.low[i][Object.keys(ranking.low[i])[0]], 'end': ranking.end[i][Object.keys(ranking.end[i])[0]]};
+    }
+
+    // Add data
+    chart.data = data
+    
+    // Add Scrollbar in Y axis
+    chart.scrollbarY = new am4core.Scrollbar();
+
+    // Create legend
+    chart.legend = new am4charts.Legend();
+    chart.legend.labels .template.fill = am4core.color('#fff');
+    chart.legend.valueLabels.template.fill = am4core.color('#fff');
+    
+    // Create axes
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = 'year';
+    categoryAxis.numberFormatter.numberFormat = '#';
+    categoryAxis.renderer.inversed = true;
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.cellStartLocation = 0.1;
+    categoryAxis.renderer.cellEndLocation = 0.9;
+    categoryAxis.renderer.labels.template.fill = am4core.color('#fff');
+    
+    var  valueAxis = chart.xAxes.push(new am4charts.ValueAxis()); 
+    valueAxis.renderer.labels.template.fill = am4core.color('#fff');
+    
+    // Create series
+    function createSeries(field, name) {
+      var series = chart.series.push(new am4charts.ColumnSeries());
+      series.dataFields.valueX = field;
+      series.dataFields.categoryY = 'year';
+      series.name = name;
+      series.columns.template.tooltipText = '{name}: [bold]{valueX}[/]';
+      series.columns.template.height = am4core.percent(100);
+      series.sequencedInterpolation = true;
+    }
+    
+    createSeries('high', 'High');
+    createSeries('low', 'Low');
+    createSeries('end', 'End');
+    
+    }); // end am4core.ready()
+}

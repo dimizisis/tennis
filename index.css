@@ -29,6 +29,7 @@ body {
     min-height: 100%;
     font-family: "Source Sans Pro", sans-serif;
     margin: auto;
+	-webkit-overflow-scrolling:touch;
 }
 
 img {
@@ -269,6 +270,21 @@ th:hover {
 	cursor: pointer;
 }
 
+#chartdiv {
+	background-color: #323c50;
+	color: white;
+	overflow: auto;
+	width: 40%;
+	margin: 0 auto;
+    display: table;
+    padding: 0 0 8em 0;
+	border-collapse: collapse;
+  -webkit-overflow-scrolling: touch;
+  	border-spacing: 0;
+  	border: 1px solid #ddd;
+	height: 40rem;
+}
+
 @keyframes text_reveal_box {
 	50% {
 		width: 100%;
@@ -287,7 +303,7 @@ th:hover {
 
 @media all and (max-width: 720px) {
 	table {
-		overflow-x: scroll;
+		overflow-y: scroll;
 	}
 	table th, table td {
 	  font-size: smaller;
