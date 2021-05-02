@@ -67,7 +67,7 @@ class TennisPlayer {
     infoMap.set('Date of Birth', this.birthday);
     infoMap.set('Place of birth', this.birthplace);
     infoMap.set('Age', parseInt(new Date().getFullYear() - new Date(this.birthday).getFullYear()));
-    infoMap.set('Height', this.height);
+    infoMap.set('Height (m)', this.height/100);
     infoMap.set('Citizenship', this.citizenship);
     infoMap.set('Outfitter', this.outfitter);
     return infoMap;
@@ -86,9 +86,6 @@ class Ranking {
     this.high = high;
     this.low = end;
     this.end = low;
-  }
-  toSingleArray() {
-    return [this.high, this.low, this.end];
   }
 }
 
