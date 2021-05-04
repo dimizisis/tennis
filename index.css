@@ -28,8 +28,8 @@ body {
     position: relative;
     min-height: 100%;
     font-family: "Source Sans Pro", sans-serif;
-    margin: auto;
-	-webkit-overflow-scrolling:touch;
+	-webkit-overflow-scrolling: touch;
+	margin: 0px;
 }
 
 img {
@@ -225,7 +225,6 @@ table td:hover {
 /* Footer */
 #footer {
 	background-color: rgba(0,0,0, 0.4);
-    min-width: 100%;
 }
 
 #footer > h1 {
@@ -234,10 +233,8 @@ table td:hover {
 
 #footer .footer {
 	min-height: 100px;
-	flex-direction: column;
-	padding-top: 5rem;
-	padding-bottom: inherit;
 }
+
 #footer h2 {
 	color: white;
 	font-weight: 500;
@@ -246,17 +243,20 @@ table td:hover {
 	margin-top: auto;
 	margin-bottom: auto;
 }
+
 #footer .social-icon {
-	display: flex;
-	padding-bottom: 5rem;
+	display: grid;
 	margin-bottom: auto;
+	align-items: center;
 }
+
 #footer .social-item {
 	height: fit-content;
 	width: fit-content;
     text-align: center;
-	margin: auto;
+	padding: 2rem;
 }
+
 /* End Footer */
 
 th:hover {
@@ -273,15 +273,11 @@ th:hover {
 #chartdiv {
 	background-color: #323c50;
 	color: white;
-	overflow: auto;
 	width: 40%;
 	margin: 0 auto;
-    display: table;
-    padding: 0 0 8em 0;
+    display: block;
 	border-collapse: collapse;
   -webkit-overflow-scrolling: touch;
-  	border-spacing: 0;
-  	border: 1px solid #ddd;
 	height: 40rem;
 }
 
@@ -301,12 +297,35 @@ th:hover {
 	}
 }
 
-@media all and (max-width: 720px) {
+@media all and (min-width: 708px) {
+	#footer .social-icon {
+		display: flex;
+		margin-bottom: auto;
+		align-items: center;
+		justify-content: space-evenly;
+		padding-top: 3rem;
+		padding-bottom: 3rem;
+	}
+	
+	#footer .social-item {
+		height: fit-content;
+		width: fit-content;
+		text-align: center;
+		margin: auto;
+	}
+}
+
+@media all and (max-width: 920px) {
 	table {
-		overflow-y: scroll;
+		width: 90%;
+		overflow-x: scroll;
 	}
 	table th, table td {
 	  font-size: smaller;
+	}
+	#chartdiv {
+		width: 90%;
+		font-size: smaller;
 	}
 }
 
