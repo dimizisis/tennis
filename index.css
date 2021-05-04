@@ -248,6 +248,7 @@ table td:hover {
 	display: grid;
 	margin-bottom: auto;
 	align-items: center;
+	justify-items: center;
 }
 
 #footer .social-item {
@@ -318,7 +319,6 @@ th:hover {
 @media all and (max-width: 920px) {
 	table {
 		width: 90%;
-		overflow-x: scroll;
 	}
 	table th, table td {
 	  font-size: smaller;
