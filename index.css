@@ -132,6 +132,7 @@ h3 {
 
 /* Cover */
 #cover {
+	text-align: center;
     padding-top: 5rem;
 }
 
