@@ -1,6 +1,16 @@
 'use strict';
 
+/** Class representing a tennis player. */
 class TennisPlayer {
+  /**
+    * Creates a tennis player instance
+    * @param {string} name - Player's complete name
+    * @param {string} birthday - Player's birthday (MM/DD/YYYY)
+    * @param {string} birthplace - Player's birthplace (country name)
+    * @param {string} citizenship - Player's citizenship (country name)
+    * @param {number} height - Player's height (in meters)
+    * @param {string} outfitter - Player's outfitter (Brand's complete name)
+    */
   constructor(name, birthday, birthplace, citizenship, height, outfitter) {
     this.name = name;
     this.birthday = birthday;
@@ -9,20 +19,20 @@ class TennisPlayer {
     this.height = height;
     this.outfitter = outfitter;
     this.statistics = new Statistics();
-
-    /* Ranking */
-    let high = [{ 2003: 660 }, { 2004: 184 }, { 2005: 75 }, { 2006: 16 }, { 2007: 3 }, { 2008: 3 }, { 2009: 3 }, { 2010: 2 }, { 2011: 1 }, { 2012: 1 }, { 2013: 1 }, { 2014: 1 }, { 2015: 1 }, { 2016: 1 }, { 2017: 2 }, { 2018: 1 }, { 2019: 1 }, { 2020: 1 }];
-    let low = [{ 2003: 774 }, { 2004: 681 }, { 2005: 188 }, { 2006: 81 }, { 2007: 16 }, { 2008: 3 }, { 2009: 4 }, { 2010: 3 }, { 2011: 3 }, { 2012: 2 }, { 2013: 2 }, { 2014: 2 }, { 2015: 1 }, { 2016: 2 }, { 2017: 12 }, { 2018: 22 }, { 2019: 2 }, { 2020: 2 }];
-    let end = [{ 2003: 679 }, { 2004: 186 }, { 2005: 78 }, { 2006: 16 }, { 2007: 3 }, { 2008: 3 }, { 2009: 3 }, { 2010: 3 }, { 2011: 1 }, { 2012: 1 }, { 2013: 2 }, { 2014: 1 }, { 2015: 1 }, { 2016: 2 }, { 2017: 12 }, { 2018: 1 }, { 2019: 2 }, { 2020: 1 }];
-    this.ranking = new Ranking(high, low, end);
-    /* End Ranking */
-
+    this.ranking = new Ranking();
   }
 
+  /**
+    * Returns a string representation of the player's instance
+    */
   toString() {
     return this.name + ', ' + this.birthday + ', ' + this.birthplace + ', ' + this.citizenship + ', ' + this.height + ', ' + this.outfitter;
   }
 
+  /**
+    * Creates a Map object with player's basic info.
+    * @returns {Map} a Map object
+    */
   toKeyValuePair() {
     let infoMap = new Map();
     infoMap.set('Name', this.name);
@@ -36,14 +46,18 @@ class TennisPlayer {
   }
 }
 
+/** Class representing a player's overall statistics. */
 class Statistics {
+  /**
+    * Creates a statistics instance
+    */
   constructor() {
     if (localStorage.singlesServiceRecord === undefined)
-      this.singlesServiceRecord = this.initialize_singles_service();
+      this.singlesServiceRecord = this.initializeSinglesService();
     else
       this.singlesServiceRecord = new Map(JSON.parse(localStorage.singlesServiceRecord)); // ES6 Map
     if (localStorage.singlesReturnRecord === undefined)
-      this.singlesReturnRecord = this.initialize_singles_return();
+      this.singlesReturnRecord = this.initializeSinglesReturn();
     else
       this.singlesReturnRecord = new Map(JSON.parse(localStorage.singlesReturnRecord)); // ES6 Map
 
@@ -54,6 +68,10 @@ class Statistics {
 
   }
 
+ /**
+  * Set complementary fields (for autocompletion)
+  * for service records.
+  */ 
   setComplementaryServiceFields() {
     this.complementaryService.set('1st Serve Points Won (%)', '1st Serve Points Lost (%)');
     this.complementaryService.set('2nd Serve Points Won (%)', '2nd Serve Points Lost (%)');
@@ -62,6 +80,10 @@ class Statistics {
     this.complementaryService.set('Total Service Points Won (%)', 'Total Service Points Lost (%)');
   }
 
+  /**
+  * Set complementary fields (for autocompletion)
+  * for return records.
+  */ 
   setComplementaryReturnFields() {
     this.complementaryReturn.set('1st Serve Return Points Won (%)', '1st Serve Return Points Lost (%)');
     this.complementaryReturn.set('2nd Serve Return Points Won (%)', '2nd Serve Return Points Lost (%)');
@@ -70,7 +92,11 @@ class Statistics {
     this.complementaryReturn.set('Return Points Won (%)', 'Return Points Lost (%)');
   }
 
-  initialize_singles_service() {
+  /**
+  * Initialize data for singles
+  * service records.
+  */ 
+  initializeSinglesService() {
     var singlesServiceRecord = new Map();
     /* Singles Service Record */
     singlesServiceRecord.set('Aces', 0);
@@ -97,7 +123,10 @@ class Statistics {
     return singlesServiceRecord;
   }
 
-  initialize_singles_return() {
+  /**
+  * Initialize data for return records.
+  */
+  initializeSinglesReturn() {
     var singlesReturnRecord = new Map();
     /* Singles Return Record */
     singlesReturnRecord.set('1st Serve Return Points Won (%)', 0);
@@ -119,16 +148,44 @@ class Statistics {
   }
 }
 
+/** Class representing a player's ranking */
 class Ranking {
+  /**
+    * Creates a ranking instance
+    * @param {array} high - Array with the highest rankings (per year).
+    * @param {array} end - Array with the final rankings (per year).
+    * @param {array} low - Array with the lowest rankings (per year).
+    */
   constructor(high, end, low) {
-    this.high = high;
-    this.low = end;
-    this.end = low;
+    if(!arguments.length) {
+      if (localStorage.getItem('high') === null)
+        this.high = [{'YYYY': 0}];
+      else
+        this.high = JSON.parse(localStorage.getItem('high'))
+      if (localStorage.getItem('low') === null)
+        this.low = [{'YYYY': 0}];
+      else
+        this.low = JSON.parse(localStorage.getItem('low'))
+      if (localStorage.getItem('end') === null)
+        this.end = [{'YYYY': 0}];
+      else
+        this.end = JSON.parse(localStorage.getItem('end'))
+    } else {
+      this.high = high;
+      this.low = end;
+      this.end = low;
+    }
   }
 }
 
+/* Player Initialization */
 var player = initializePlayer();
 
+/** Initializes player. If data in local
+ * storage exists, retrieves them. If not,
+ * dummy data are shown to the user.
+ * @returns {Player} New player instance.
+ */
 function initializePlayer() {
   const defaultVals = ['Enter Name Here', 'MM/DD/YYYY', 'Enter Birthplace', 'Enter Citizenship', 'Enter Height', 'Enter Outfitter'];
   if (localStorage.length === 0) {
@@ -147,7 +204,8 @@ function initializePlayer() {
   return player;
 }
 
-/* Create table with player's basic info */
+/** Creates table with player's basic info
+ */
 function displayPlayerInfo() {
   var infoSection = createSection('Basic Information', 'info', './images/icons/info.svg', 'info-icon');
   let [infoTable, headerDiv] = createTable(player.toKeyValuePair(), 'info-table', '');
@@ -157,7 +215,9 @@ function displayPlayerInfo() {
   document.getElementById('cover').parentNode.insertBefore(infoSection, document.getElementById('cover').nextSibling);
 }
 
-/* Create tables with player's statistics (service & return records) */
+/** Creates tables with player's statistics
+ * (service & return records)
+ */
 function displayPlayerStatistics() {
 
   var statsSection = createSection('Statistics', 'stats', './images/icons/stats.svg', 'stats-icon');
@@ -181,16 +241,28 @@ function displayPlayerStatistics() {
   document.getElementById('info').parentNode.insertBefore(statsSection, document.getElementById('info').nextSibling);
 }
 
-/* Create table with player's ranking (by year) */
+/**
+ * Create table with player's ranking
+ * (by year)
+ */
 function displayPlayerRanking() {
   var rankingSection = createSection('ATP Ranking by Year', 'ranking', './images/icons/ranking.svg', 'ranking-icon');
   var tableDiv = document.createElement('div');
   tableDiv.id = 'player-ranking';
 
-  let [rankingTable, rankingHeaderDiv] = createRankingTable(player.ranking, 'ranking-by-year-table', 'General');
+  let [rankingTable, rankingHeaderDiv] = createRankingTable('ranking-by-year-table', 'General');
+  let addRowImg = document.createElement('img');
+  addRowImg.id = 'add-row-img'
+  addRowImg.src = './images/icons/plus.svg';
+
+  addRowImg.addEventListener('click', insertRankingRow);
+  addRowImg.addEventListener('click', saveRankingToLocalStorage);
+  addRowImg.addEventListener('click', loadRankingChart);
+  addRowImg.addEventListener('click', addEventListenersToTds);
 
   tableDiv.appendChild(rankingHeaderDiv);
   tableDiv.appendChild(rankingTable);
+  tableDiv.appendChild(addRowImg);
 
   rankingSection.appendChild(tableDiv);
 
@@ -198,7 +270,14 @@ function displayPlayerRanking() {
   document.getElementById('stats').parentNode.insertBefore(rankingSection, document.getElementById('stats').nextSibling);
 }
 
-/* Creates a section, along with its header and icon */
+/**
+ * Creates a section, along with its header
+ * and icon.
+ * @param {string} headerStr - The header's string
+ * @param {string} categoryIconSrc - Icon's src
+ * @param {string} categoryIconAltTxt - Icon's alternative text
+ * @return {Element} Section's element
+ */
 function createSection(headerStr, id, categoryIconSrc, categoryIconAltTxt) {
   var section = document.createElement('section');
   section.id = id;
@@ -218,7 +297,14 @@ function createSection(headerStr, id, categoryIconSrc, categoryIconAltTxt) {
   return section;
 }
 
-/* Creates a new table based on a key-value object (populates its data) */
+/**
+ * Creates a new table based on
+ * a key-value object (populates its data).
+ * @param {string} keyValObj - The key-value object
+ * @param {Element} tableId - Table's id
+ * @param {Element} header - Subcategory header
+ * @return {Array} Containing table & header's division
+ */
 function createTable(keyValObj, tableId, header) {
   var table = document.createElement('table');
   table.id = tableId;
@@ -240,10 +326,16 @@ function createTable(keyValObj, tableId, header) {
   return [table, headerDiv];
 }
 
-/* Creates a new table based on a key-value object (populates its data) */
-function createRankingTable(ranking, tableId, header) {
+/**
+ * Creates a new table (ranking) based on
+ * given a table id & a subcategory header.
+ * @param {string} tableId - Ranking table id
+ * @param {Element} header - Subcategory header
+ * @return {Array} Containing table & header's division
+ */
+function createRankingTable(tableId, header) {
 
-  var headers = ['Year', 'High', 'Low', 'End'];
+  var headers = ['Year', 'High', 'Low', 'End', ''];
 
   var table = document.createElement('table');
   table.id = tableId;
@@ -255,55 +347,79 @@ function createRankingTable(ranking, tableId, header) {
     th.id = headers[i].toLowerCase() + '-th';
     th.classList.add('rankth');
     th.appendChild(document.createTextNode(headers[i]));
-    var img = document.createElement('img');
-    img.src = './images/icons/invisible.svg';
-    img.classList.add('th-icon');
-    img.id = 'visibility-' + headers[i].toLowerCase();
-    img.alt = headers[i].toLowerCase() + '-visibility-icon';
-    th.appendChild(img);
+    if (i <= headers.length-2) {
+      var img = document.createElement('img');
+      img.src = './images/icons/invisible.svg';
+      img.classList.add('th-icon');
+      img.id = 'visibility-' + headers[i].toLowerCase();
+      img.alt = headers[i].toLowerCase() + '-visibility-icon';
+      th.appendChild(img);
+    }
     tr.appendChild(th);
-    table.appendChild(tr);
   }
+
+  table.appendChild(tr);
 
   /* Populate data */
   var headerDiv = document.createElement('div');
   var subcategoryHeader = document.createElement('h3');
   subcategoryHeader.textContent = header;
   headerDiv.appendChild(subcategoryHeader);
-  for (let i = 0; i < ranking.high.length; ++i) {
+  for (let i = 0; i < player.ranking.high.length; ++i) {
     tr = document.createElement('tr');
     var tdYear = document.createElement('td');
-    tdYear.appendChild(document.createTextNode(Object.keys(ranking.high[i])[0]));
+    tdYear.appendChild(document.createTextNode(Object.keys(player.ranking.high[i])[0]));
     tdYear.classList.add('year-td');
     var tdHigh = document.createElement('td');
-    tdHigh.appendChild(document.createTextNode(ranking.high[i][Object.keys(ranking.high[i])[0]]));
+    tdHigh.appendChild(document.createTextNode(player.ranking.high[i][Object.keys(player.ranking.high[i])[0]]));
     tdHigh.classList.add('high-td');
     var tdLow = document.createElement('td');
-    tdLow.appendChild(document.createTextNode(ranking.low[i][Object.keys(ranking.low[i])[0]]));
+    tdLow.appendChild(document.createTextNode(player.ranking.low[i][Object.keys(player.ranking.low[i])[0]]));
     tdLow.classList.add('low-td');
     var tdEnd = document.createElement('td');
-    tdEnd.appendChild(document.createTextNode(ranking.end[i][Object.keys(ranking.end[i])[0]]));
+    tdEnd.appendChild(document.createTextNode(player.ranking.end[i][Object.keys(player.ranking.end[i])[0]]));
     tdEnd.classList.add('end-td');
+
+    let removeRowImg = document.createElement('img');
+    removeRowImg.id = 'remove-row-img';
+    removeRowImg.src = './images/icons/remove.svg';
 
     tr.appendChild(tdYear);
     tr.appendChild(tdHigh);
     tr.appendChild(tdLow);
     tr.appendChild(tdEnd);
 
+    tr.appendChild(removeRowImg);
+
     table.appendChild(tr);
+
   }
   return [table, headerDiv];
 }
 
+/**
+ * Inserts a new row at the end 
+ * of the ranking table.
+ */
 function insertRankingRow() {
   var rankingTable = document.getElementById('ranking-by-year-table');
-  var row = rankingTable.insertRow(-1);
+  var row = rankingTable.insertRow(-1); /* -1 to insert it at the end of the table */
   var year = row.insertCell(0);
+  year.innerHTML = 'YYYY';
   var high = row.insertCell(1);
+  high.innerHTML = '0';
   var end = row.insertCell(2);
+  end.innerHTML = '0';
   var low = row.insertCell(3);
+  low.innerHTML = '0';
 }
 
+/**
+ * Given a img element, creates a
+ * 2d canvas & draws a base64 image.
+ * @param {Element} img - An image element
+ * @returns {string} the url of the created image
+ */
 function getBase64Image(img) {
   var canvas = document.createElement('canvas');
   canvas.width = img.width;
@@ -317,6 +433,12 @@ function getBase64Image(img) {
   return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
 }
 
+/**
+ * Loads the main title (H1). 
+ * If it is previous saved, retrieves
+ * it from local storage. Else, shows
+ * 'Enter Name Here'.
+ */
 function loadMainTitle() {
   if (localStorage.getItem('maintitle') != null)
     document.getElementById('maintitle').innerHTML = localStorage.getItem('maintitle');
@@ -363,7 +485,7 @@ window.addEventListener('load', addSortingEventListeners);
 /* Add column visibility listeners */
 window.addEventListener('load', addVisibilityEventListeners);
 
-window.addEventListener('load', loadRankingChart.bind(null, player.ranking));
+window.addEventListener('load', loadRankingChart);
 
 /* Add listeners to table cells (making them editable) */
 window.addEventListener('load', addEventListenersToTds);
@@ -376,7 +498,12 @@ window.addEventListener('load', setAutomaticCalculations);
 
 /* ----------------- NAVIGATION BAR ----------------- */
 
-/* Add the sticky class to the navigation bar when you reach its scroll position. Remove 'sticky' when you leave the scroll position */
+/**
+ * Add the sticky class to the navigation bar 
+ * when you reach its scroll position. 
+ * Remove 'sticky' when you leave the scroll 
+ * position.
+ */
 function keepNavBar() {
   let navbar = document.getElementById('navbar');
   let sticky = navbar.offsetTop;
@@ -405,7 +532,11 @@ Array.from(document.getElementsByClassName('navbtn')).forEach(element => {
 
 /* ----------------- TABLE SORTING ----------------- */
 
-/* Add event listeners for all columns, according to their class & id (word before the '-th') */
+/**
+ * Add event listeners for all columns,
+ * according to their class & id
+ * (word before the '-th')
+ */
 function addSortingEventListeners() {
   Array.from(document.getElementsByClassName('rankth')).forEach((thElement) => {
     var rankTableId = 'ranking-by-year-table';
@@ -419,7 +550,13 @@ function addSortingEventListeners() {
   });
 }
 
-/* Sort table with the given ID, by clicked column. This will be triggered only when user clicks on a column. */
+/**
+ * Sorts a table with the given ID, by clicked column. 
+ * This will be triggered only when user clicks on 
+ * a column.
+ * @param {string} id - The id of the table's element
+ * @param {int} n - The column number that will be sorted
+ */
 function sortTable(id, n) {
   let table, rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
   table = document.getElementById(id);
@@ -461,6 +598,11 @@ function sortTable(id, n) {
 
 /* ----------------- COLUMN VISIBILITY ----------------- */
 
+/**
+ * Adds event listeners that refer to column's visibility.
+ * This function is triggered when the user clicks the
+ * 'eye' button.
+ */
 function addVisibilityEventListeners() {
   Array.from(document.getElementsByClassName('th-icon')).forEach((icon) => {
     var colName = icon.id.substring(icon.id.lastIndexOf('-') + 1);
@@ -485,31 +627,37 @@ function addVisibilityEventListeners() {
 
 /* ----------------- END COLUMN VISIBILITY ----------------- */
 
-function loadRankingChart(ranking) {
+/**
+ * Loads the ranking chart (disposes potential old ones first)
+ */
+function loadRankingChart() {
+
+  am4core.disposeAllCharts();
 
   am4core.ready(function () {
     am4core.useTheme(am4themes_animated);
 
-    // Create chart instance
+    /* Create chart instance */
     var chart = am4core.create('chartdiv', am4charts.XYChart);
     chart.responsive.enabled = true;
 
+    /* Adapt data to necessary form */
     var data = [];
-    for (let i = 0; i < ranking.high.length; ++i)
-      data[i] = { 'year': Object.keys(ranking.high[i])[0], 'high': ranking.high[i][Object.keys(ranking.high[i])[0]], 'low': ranking.low[i][Object.keys(ranking.low[i])[0]], 'end': ranking.end[i][Object.keys(ranking.end[i])[0]] };
+    for (let i = 0; i < player.ranking.high.length; ++i)
+      data[i] = { 'year': Object.keys(player.ranking.high[i])[0], 'high': player.ranking.high[i][Object.keys(player.ranking.high[i])[0]], 'low': player.ranking.low[i][Object.keys(player.ranking.low[i])[0]], 'end': player.ranking.end[i][Object.keys(player.ranking.end[i])[0]] };
 
-    // Add data
+    /* Add data */
     chart.data = data
 
-    // Add Scrollbar in Y axis
+    /* Add Scrollbar in Y axis */
     chart.scrollbarY = new am4core.Scrollbar();
 
-    // Create legend
+    /* Create legend */
     chart.legend = new am4charts.Legend();
     chart.legend.labels.template.fill = am4core.color('#fff');
     chart.legend.valueLabels.template.fill = am4core.color('#fff');
 
-    // Create axes
+    /* Create axes */
     var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = 'year';
     categoryAxis.numberFormatter.numberFormat = '#';
@@ -522,7 +670,7 @@ function loadRankingChart(ranking) {
     var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
     valueAxis.renderer.labels.template.fill = am4core.color('#fff');
 
-    // Create series
+    /* Create series */
     function createSeries(field, name) {
       var series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.valueX = field;
@@ -540,6 +688,9 @@ function loadRankingChart(ranking) {
   });
 }
 
+/**
+ * Adds all the proper events listeners to H1 (title of page)
+ */
 function addEventListenerToMainTitle() {
   var mainTitle = document.getElementById('maintitle');
   mainTitle.addEventListener('dblclick', function (e) {
@@ -551,28 +702,39 @@ function addEventListenerToMainTitle() {
   });
   mainTitle.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-      saveToLocalStorage(this);
+      saveDataToLocalStorage(this);
       this.contentEditable = false;
     }
   });
   mainTitle.addEventListener('focusout', function (e) {
-    saveToLocalStorage(this);
+    saveDataToLocalStorage(this);
     this.contentEditable = false;
   });
 }
 
+/**
+ * Adds event listeners to tds (row cells). This function
+ * is triggered once at the begining (on load) & every time
+ * a users adds rows to ranking table.
+ */
 function addEventListenersToTds() {
   var cells = document.querySelectorAll('td');
   for (var i = 0; i < cells.length; ++i) {
     cells[i].addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
-        saveToLocalStorage(this);
+        saveDataToLocalStorage(this);
         this.contentEditable = false;
+        if (document.getElementById('ranking-by-year-table').contains(this)) {
+          loadRankingChart();
+        }
       }
     });
     cells[i].addEventListener('focusout', function (e) {
-      saveToLocalStorage(this);
+      saveDataToLocalStorage(this);
       this.contentEditable = false;
+      if (document.getElementById('ranking-by-year-table').contains(this)) {
+        loadRankingChart();
+      }
     });
     cells[i].addEventListener('dblclick', function (e) {
       this.contentEditable = true;
@@ -584,7 +746,11 @@ function addEventListenersToTds() {
   }
 }
 
-function saveToLocalStorage(element) {
+/**
+ * Given an element, saves its data to local storage properly.
+ * @param {Element} element - A HTML element
+ */
+function saveDataToLocalStorage(element) {
   if (document.getElementById('stats-table-singles-service').contains(element)) {
     player.statistics.singlesServiceRecord.set(element.id, element.textContent);
     localStorage.singlesServiceRecord = JSON.stringify(Array.from(player.statistics.singlesServiceRecord.entries()));
@@ -593,11 +759,43 @@ function saveToLocalStorage(element) {
     player.statistics.singlesReturnRecord.set(element.id, element.textContent);
     localStorage.singlesReturnRecord = JSON.stringify(Array.from(player.statistics.singlesReturnRecord.entries()));
   }
+  else if (document.getElementById('ranking-by-year-table').contains(element)) {
+    saveRankingToLocalStorage();
+  }
   else {
     localStorage.setItem(element.id, element.textContent);
   }
 }
 
+/**
+ * Saves ranking table data to local storage properly.
+ */
+function saveRankingToLocalStorage() {
+  var rankingTable = document.getElementById('ranking-by-year-table');
+  var high = [];
+  var end = [];
+  var low = [];
+  for (var i = 1, row; row = rankingTable.rows[i]; ++i) {
+    let highVal = row.cells[1].innerHTML;
+    let endVal = row.cells[2].innerHTML;
+    let lowVal = row.cells[3].innerHTML;
+    var yearVal = row.cells[0].innerHTML;
+
+    high.push({[yearVal]: highVal});
+    end.push({[yearVal]: endVal});
+    low.push({[yearVal]: lowVal});
+ }
+ player.ranking = new Ranking(high, end, low);
+ localStorage.setItem('high', JSON.stringify(player.ranking.high));
+ localStorage.setItem('end', JSON.stringify(player.ranking.end));
+ localStorage.setItem('low', JSON.stringify(player.ranking.low));
+}
+
+/**
+ * Sets a number of automatic calculations that need to be
+ * done. This function is triggered when user changes specific
+ * data from a stats table.
+ */
 function setAutomaticCalculations() {
   player.statistics.complementaryService.forEach((value, key) => {
     document.getElementById(key).addEventListener('input', function (e) {
