@@ -468,58 +468,6 @@ function loadMainTitle() {
     document.getElementById('maintitle').innerHTML = 'Enter Name Here';
 }
 
-/* Load player's image (if exists). Else, show input for img upload. */
-window.addEventListener('load', function () {
-  if (localStorage.getItem('playerImg') != null) {
-    document.getElementById('imginput').style = 'display: none';
-    var dataImage = localStorage.getItem('playerImg');
-    document.getElementById('playerimg').src = 'data:image/png;base64,' + dataImage;
-    return;
-  }
-  document.getElementById('imginput').addEventListener('change', function () {
-    if (this.files && this.files[0]) {
-      var img = document.getElementById('playerimg');
-      img.addEventListener('load', () => {
-        document.getElementById('imginput').style = 'display: none';
-        var imgData = getBase64Image(img);
-        localStorage.setItem('playerImg', imgData);
-      });
-      img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-    }
-  });
-});
-
-/* Load main title (if exists) */
-window.addEventListener('load', loadMainTitle);
-
-/* Load basic player info */
-window.addEventListener('load', displayPlayerInfo);
-
-/* Load player statistics */
-window.addEventListener('load', displayPlayerStatistics);
-
-/* Load player ranking */
-window.addEventListener('load', displayPlayerRanking);
-
-/* Add column visibility listeners */
-window.addEventListener('load', addSortingEventListeners);
-
-/* Add column visibility listeners */
-window.addEventListener('load', addVisibilityEventListeners);
-
-window.addEventListener('load', loadRankingChart);
-
-/* Add listeners to table cells (making them editable) */
-window.addEventListener('load', addEventListenersToTds);
-
-/* Add listener to main title (making it editable) */
-window.addEventListener('load', addEventListenerToMainTitle);
-
-/* Enable automatic calculations on stats tables */
-window.addEventListener('load', setAutomaticCalculations);
-
-window.addEventListener('load', addEventListenerToSocialMedia);
-
 /* ----------------- NAVIGATION BAR ----------------- */
 
 /**
@@ -536,21 +484,6 @@ function keepNavBar() {
   else
     navbar.classList.remove('sticky');
 }
-
-/* When the user scrolls the page, execute keepNavBar */
-window.addEventListener('scroll', keepNavBar);
-
-/* Change active status when a navigation bar button is clicked */
-Array.from(document.getElementsByClassName('navbtn')).forEach(element => {
-  element.addEventListener('click', function (e) {
-    let buttons = document.getElementsByClassName('navbtn');
-    for (let i = 0; i < buttons.length; ++i) {
-      if (buttons[i].classList.contains('active'))
-        buttons[i].classList.toggle('active');
-    }
-    document.getElementById(element.id).classList.add('active');
-  })
-});
 
 /* ----------------- END NAVIGATION BAR ----------------- */
 
@@ -653,6 +586,8 @@ function addVisibilityEventListeners() {
 
 /* ----------------- END COLUMN VISIBILITY ----------------- */
 
+/* ----------------- RANKING CHART ----------------- */
+
 /**
  * Loads the ranking chart (disposes potential old ones first)
  */
@@ -714,6 +649,8 @@ function loadRankingChart() {
   });
 }
 
+/* ----------------- END RANKING CHART ----------------- */
+
 /**
  * Adds all the proper events listeners to H1 (title of page)
  */
@@ -738,41 +675,7 @@ function addEventListenerToMainTitle() {
   });
 }
 
-/**
- * Adds event listeners to tds (row cells). This function
- * is triggered once at the begining (on load) & every time
- * a users adds rows to ranking table.
- */
-function addEventListenersToTds() {
-  var cells = document.querySelectorAll('td');
-  for (var i = 0; i < cells.length; ++i) {
-    cells[i].addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
-        saveDataToLocalStorage(this);
-        this.contentEditable = false;
-        if (document.getElementById('ranking-by-year-table').contains(this)) {
-          loadRankingChart();
-        }
-      }
-    });
-    cells[i].addEventListener('focusout', function (e) {
-      saveDataToLocalStorage(this);
-      this.contentEditable = false;
-      if (document.getElementById('ranking-by-year-table').contains(this)) {
-        loadRankingChart();
-      }
-    });
-    cells[i].addEventListener('dblclick', function (e) {
-      if (this.getElementsByTagName('img').length == 0)
-        this.contentEditable = true;
-    });
-    cells[i].addEventListener('contextmenu', function (e) {
-      e.preventDefault();
-      if (this.getElementsByTagName('img').length == 0)
-        this.contentEditable = true;
-    });
-  }
-}
+/* ----------------- SAVING TO LOCAL STORAGE ----------------- */
 
 /**
  * Given an element, saves its data to local storage properly.
@@ -818,6 +721,10 @@ function saveRankingToLocalStorage() {
   localStorage.setItem('end', JSON.stringify(player.ranking.end));
   localStorage.setItem('low', JSON.stringify(player.ranking.low));
 }
+
+/* ----------------- END SAVING TO LOCAL STORAGE ----------------- */
+
+/* ----------------- AUTOMATIC TABLE CALCULATIONS ----------------- */
 
 /**
  * Sets a number of automatic calculations that need to be
@@ -875,7 +782,52 @@ function setAutomaticCalculations() {
   });
 }
 
-function addEventListenerToSocialMedia() {
+/* ----------------- END AUTOMATIC TABLE CALCULATIONS ----------------- */
+
+/* ----------------- ADD EVENT LISTENERS ----------------- */
+
+/**
+ * Adds event listeners to tds (row cells). This function
+ * is triggered once at the begining (on load) & every time
+ * a users adds rows to ranking table.
+ */
+ function addEventListenersToTds() {
+  var cells = document.querySelectorAll('td');
+  for (var i = 0; i < cells.length; ++i) {
+    cells[i].addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        saveDataToLocalStorage(this);
+        this.contentEditable = false;
+        if (document.getElementById('ranking-by-year-table').contains(this)) {
+          loadRankingChart();
+        }
+      }
+    });
+    cells[i].addEventListener('focusout', function (e) {
+      saveDataToLocalStorage(this);
+      this.contentEditable = false;
+      if (document.getElementById('ranking-by-year-table').contains(this)) {
+        loadRankingChart();
+      }
+    });
+    cells[i].addEventListener('dblclick', function (e) {
+      if (this.getElementsByTagName('img').length == 0)
+        this.contentEditable = true;
+    });
+    cells[i].addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      if (this.getElementsByTagName('img').length == 0)
+        this.contentEditable = true;
+    });
+  }
+}
+
+/**
+ * Adds event listeners to social media icons
+ * in order to make their links editable by
+ * the user.
+ */
+function addEventListenersToSocialMedia() {
   var socialMedia = ['facebook', 'instagram', 'twitter'];
   for (const sc of socialMedia) {
     document.getElementById(sc).addEventListener('contextmenu', function (e) {
@@ -890,4 +842,71 @@ function addEventListenerToSocialMedia() {
   }
 }
 
+/* Load player's image (if exists). Else, show input for img upload. */
+window.addEventListener('load', function () {
+  if (localStorage.getItem('playerImg') != null) {
+    document.getElementById('imginput').style = 'display: none';
+    var dataImage = localStorage.getItem('playerImg');
+    document.getElementById('playerimg').src = 'data:image/png;base64,' + dataImage;
+    return;
+  }
+  document.getElementById('imginput').addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+      var img = document.getElementById('playerimg');
+      img.addEventListener('load', () => {
+        document.getElementById('imginput').style = 'display: none';
+        var imgData = getBase64Image(img);
+        localStorage.setItem('playerImg', imgData);
+      });
+      img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+    }
+  });
+});
 
+/* Load main title (if exists) */
+window.addEventListener('load', loadMainTitle);
+
+/* Load basic player info */
+window.addEventListener('load', displayPlayerInfo);
+
+/* Load player statistics */
+window.addEventListener('load', displayPlayerStatistics);
+
+/* Load player ranking */
+window.addEventListener('load', displayPlayerRanking);
+
+/* Add column visibility listeners */
+window.addEventListener('load', addSortingEventListeners);
+
+/* Add column visibility listeners */
+window.addEventListener('load', addVisibilityEventListeners);
+
+window.addEventListener('load', loadRankingChart);
+
+/* Add listeners to table cells (making them editable) */
+window.addEventListener('load', addEventListenersToTds);
+
+/* Add listener to main title (making it editable) */
+window.addEventListener('load', addEventListenerToMainTitle);
+
+/* Enable automatic calculations on stats tables */
+window.addEventListener('load', setAutomaticCalculations);
+
+window.addEventListener('load', addEventListenersToSocialMedia);
+
+/* When the user scrolls the page, execute keepNavBar */
+window.addEventListener('scroll', keepNavBar);
+
+/* Change active status when a navigation bar button is clicked */
+Array.from(document.getElementsByClassName('navbtn')).forEach(element => {
+  element.addEventListener('click', function (e) {
+    let buttons = document.getElementsByClassName('navbtn');
+    for (let i = 0; i < buttons.length; ++i) {
+      if (buttons[i].classList.contains('active'))
+        buttons[i].classList.toggle('active');
+    }
+    document.getElementById(element.id).classList.add('active');
+  })
+});
+
+/* ----------------- END ADD EVENT LISTENERS ----------------- */
