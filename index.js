@@ -68,10 +68,10 @@ class Statistics {
 
   }
 
- /**
-  * Set complementary fields (for autocompletion)
-  * for service records.
-  */ 
+  /**
+   * Set complementary fields (for autocompletion)
+   * for service records.
+   */
   setComplementaryServiceFields() {
     this.complementaryService.set('1st Serve Points Won (%)', '1st Serve Points Lost (%)');
     this.complementaryService.set('2nd Serve Points Won (%)', '2nd Serve Points Lost (%)');
@@ -83,7 +83,7 @@ class Statistics {
   /**
   * Set complementary fields (for autocompletion)
   * for return records.
-  */ 
+  */
   setComplementaryReturnFields() {
     this.complementaryReturn.set('1st Serve Return Points Won (%)', '1st Serve Return Points Lost (%)');
     this.complementaryReturn.set('2nd Serve Return Points Won (%)', '2nd Serve Return Points Lost (%)');
@@ -95,7 +95,7 @@ class Statistics {
   /**
   * Initialize data for singles
   * service records.
-  */ 
+  */
   initializeSinglesService() {
     var singlesServiceRecord = new Map();
     /* Singles Service Record */
@@ -157,17 +157,17 @@ class Ranking {
     * @param {array} low - Array with the lowest rankings (per year).
     */
   constructor(high, end, low) {
-    if(!arguments.length) {
+    if (!arguments.length) {
       if (localStorage.getItem('high') === null)
-        this.high = [{'YYYY': 0}];
+        this.high = [{ 'YYYY': 0 }];
       else
         this.high = JSON.parse(localStorage.getItem('high'))
       if (localStorage.getItem('low') === null)
-        this.low = [{'YYYY': 0}];
+        this.low = [{ 'YYYY': 0 }];
       else
         this.low = JSON.parse(localStorage.getItem('low'))
       if (localStorage.getItem('end') === null)
-        this.end = [{'YYYY': 0}];
+        this.end = [{ 'YYYY': 0 }];
       else
         this.end = JSON.parse(localStorage.getItem('end'))
     } else {
@@ -347,7 +347,7 @@ function createRankingTable(tableId, header) {
     th.id = headers[i].toLowerCase() + '-th';
     th.classList.add('rankth');
     th.appendChild(document.createTextNode(headers[i]));
-    if (i <= headers.length-2) {
+    if (i <= headers.length - 2) {
       var img = document.createElement('img');
       img.src = './images/icons/invisible.svg';
       img.classList.add('th-icon');
@@ -380,14 +380,18 @@ function createRankingTable(tableId, header) {
     tdEnd.appendChild(document.createTextNode(player.ranking.end[i][Object.keys(player.ranking.end[i])[0]]));
     tdEnd.classList.add('end-td');
 
-    let removeRowImg = document.createElement('img');
-    removeRowImg.id = 'remove-row-img';
-    removeRowImg.src = './images/icons/remove.svg';
-
     tr.appendChild(tdYear);
     tr.appendChild(tdHigh);
     tr.appendChild(tdLow);
     tr.appendChild(tdEnd);
+
+    let removeRowImg = document.createElement('img');
+    removeRowImg.src = './images/icons/remove.svg';
+    removeRowImg.classList.add('remove-img');
+    removeRowImg.addEventListener('click', function () {
+      document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
+      saveRankingToLocalStorage();
+    });
 
     tr.appendChild(removeRowImg);
 
@@ -403,15 +407,33 @@ function createRankingTable(tableId, header) {
  */
 function insertRankingRow() {
   var rankingTable = document.getElementById('ranking-by-year-table');
-  var row = rankingTable.insertRow(-1); /* -1 to insert it at the end of the table */
-  var year = row.insertCell(0);
-  year.innerHTML = 'YYYY';
-  var high = row.insertCell(1);
-  high.innerHTML = '0';
-  var end = row.insertCell(2);
-  end.innerHTML = '0';
-  var low = row.insertCell(3);
-  low.innerHTML = '0';
+  var tr = document.createElement('tr');
+  var tdYear = document.createElement('td');
+  tdYear.innerHTML = 'YYYY';
+  tdYear.classList.add('year-td');
+  var tdHigh = document.createElement('td');
+  tdHigh.innerHTML = '0';
+  tdHigh.classList.add('high-td');
+  var tdLow = document.createElement('td');
+  tdLow.innerHTML = '0';
+  tdLow.classList.add('low-td');
+  var tdEnd = document.createElement('td');
+  tdEnd.innerHTML = '0';
+  tdEnd.classList.add('end-td');
+  var removeRowImg = document.createElement('img');
+  removeRowImg.className = 'remove-img';
+  removeRowImg.src = './images/icons/remove.svg';
+  removeRowImg.addEventListener('click', function () {
+    document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
+    saveRankingToLocalStorage();
+  });
+
+  tr.appendChild(tdYear);
+  tr.appendChild(tdHigh);
+  tr.appendChild(tdLow);
+  tr.appendChild(tdEnd);
+  tr.appendChild(removeRowImg);
+  rankingTable.appendChild(tr);
 }
 
 /**
@@ -496,6 +518,8 @@ window.addEventListener('load', addEventListenerToMainTitle);
 /* Enable automatic calculations on stats tables */
 window.addEventListener('load', setAutomaticCalculations);
 
+window.addEventListener('load', addEventListenerToSocialMedia);
+
 /* ----------------- NAVIGATION BAR ----------------- */
 
 /**
@@ -562,36 +586,38 @@ function sortTable(id, n) {
   table = document.getElementById(id);
   switching = true;
   dir = 'asc';
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-    for (i = 1; i < (rows.length - 1); ++i) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName('td')[n];
-      y = rows[i + 1].getElementsByTagName('td')[n];
-      if (dir == 'asc') {
-        if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
-        }
-      } else if (dir == 'desc') {
-        if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
+  try {
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+      for (i = 1; i < (rows.length - 1); ++i) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName('td')[n];
+        y = rows[i + 1].getElementsByTagName('td')[n];
+        if (dir == 'asc') {
+          if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == 'desc') {
+          if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
         }
       }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      ++switchCount;
-    } else {
-      if (switchCount == 0 && dir == 'asc') {
-        dir = 'desc';
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
         switching = true;
+        ++switchCount;
+      } else {
+        if (switchCount == 0 && dir == 'asc') {
+          dir = 'desc';
+          switching = true;
+        }
       }
     }
-  }
+  } catch (e) { }
 }
 
 /* ----------------- END TABLE SORTING ----------------- */
@@ -737,11 +763,13 @@ function addEventListenersToTds() {
       }
     });
     cells[i].addEventListener('dblclick', function (e) {
-      this.contentEditable = true;
+      if (this.getElementsByTagName('img').length == 0)
+        this.contentEditable = true;
     });
     cells[i].addEventListener('contextmenu', function (e) {
       e.preventDefault();
-      this.contentEditable = true;
+      if (this.getElementsByTagName('img').length == 0)
+        this.contentEditable = true;
     });
   }
 }
@@ -781,14 +809,14 @@ function saveRankingToLocalStorage() {
     let lowVal = row.cells[3].innerHTML;
     var yearVal = row.cells[0].innerHTML;
 
-    high.push({[yearVal]: highVal});
-    end.push({[yearVal]: endVal});
-    low.push({[yearVal]: lowVal});
- }
- player.ranking = new Ranking(high, end, low);
- localStorage.setItem('high', JSON.stringify(player.ranking.high));
- localStorage.setItem('end', JSON.stringify(player.ranking.end));
- localStorage.setItem('low', JSON.stringify(player.ranking.low));
+    high.push({ [yearVal]: highVal });
+    end.push({ [yearVal]: endVal });
+    low.push({ [yearVal]: lowVal });
+  }
+  player.ranking = new Ranking(high, end, low);
+  localStorage.setItem('high', JSON.stringify(player.ranking.high));
+  localStorage.setItem('end', JSON.stringify(player.ranking.end));
+  localStorage.setItem('low', JSON.stringify(player.ranking.low));
 }
 
 /**
@@ -843,6 +871,23 @@ function setAutomaticCalculations() {
   document.getElementById('Date of Birth').addEventListener('input', function (e) {
     try {
       document.getElementById('Age').innerHTML = parseInt(new Date().getFullYear() - new Date(this.textContent).getFullYear());
-    } catch (ignored) {}
+    } catch (ignored) { }
   });
 }
+
+function addEventListenerToSocialMedia() {
+  var socialMedia = ['facebook', 'instagram', 'twitter'];
+  for (const sc of socialMedia) {
+    document.getElementById(sc).addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      var link = prompt('Enter Player\'s ' + this.id[0].toUpperCase() + this.id.slice(1) + ' Link:', '');
+      document.getElementById(sc + '-target').href = link;
+    });
+    document.getElementById(sc).addEventListener('keypress', function (e) {
+      var link = prompt('Enter Player\'s ' + this.id[0].toUpperCase() + this.id.slice(1) + ' Link:', '');
+      document.getElementById(sc + '-target').href = link;
+    });
+  }
+}
+
+
