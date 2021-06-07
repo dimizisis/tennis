@@ -390,6 +390,7 @@ function createRankingTable(tableId, header) {
     removeRowImg.classList.add('remove-img');
     removeRowImg.addEventListener('click', function () {
       document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
+      loadRankingChart();
       saveRankingToLocalStorage();
     });
 
@@ -425,6 +426,7 @@ function insertRankingRow() {
   removeRowImg.src = './images/icons/remove.svg';
   removeRowImg.addEventListener('click', function () {
     document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
+    loadRankingChart();
     saveRankingToLocalStorage();
   });
 
