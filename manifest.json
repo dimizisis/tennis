@@ -10,12 +10,14 @@
     {
       "src": "images/icons/favicon512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
   "start_url": "/",
   "scope": "/",
   "background_color": "white",
   "display": "standalone",
-  "description": "App for tennis player"
+  "description": "App for tennis player",
+  "prefer_related_applications": false
 }
