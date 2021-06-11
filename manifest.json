@@ -3,7 +3,7 @@
   "name": "Tennis Player App",
   "icons": [
     {
-      "src": "./icons/favicon.svg",
+      "src": "./images/icons/favicon.svg",
       "type": "image/x-icon",
       "sizes": "192x192"
     },
