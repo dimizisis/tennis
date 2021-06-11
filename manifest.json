@@ -3,23 +3,18 @@
     "name": "Tennis Player App",
     "icons": [
         {
-            "src": "images/icons/favicon.svg",
-            "type": "image/svg+xml",
-            "sizes": "64x64"
+          "src": "/images/icons/favicon.svg",
+          "type": "image/x-icon",
+          "sizes": "192x192"
         },
         {
-            "src": "images/icons/favicon.svg",
-            "type": "image/svg+xml",
-            "sizes": "192x192"
-        },
-        {
-            "src": "images/icons/favicon.svg",
-            "type": "image/svg+xml",
-            "sizes": "512x512"
+          "src": "/images/icons/favicon.svg",
+          "type": "image/x-icon",
+          "sizes": "512x512"
         }
-    ],
-    "start_url": ".",
-    "display": "standalone",
-    "theme_color": "#000000",
-    "background_color": "#ffffff"
+      ],
+      "start_url": "/",
+      "background_color": "white",
+      "display": "standalone",
+      "description": "Application for a tennis player"
 }
