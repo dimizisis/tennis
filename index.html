@@ -7,7 +7,7 @@
   <link rel="shortcut icon" href="images/icons/favicon.svg" type="image/x-icon">
   <link rel="manifest" href="mainfest.json" />
   <title>Tennis Website</title>
-  <script src="/js/index.js" defer></script>
+  <script src="js/index.js" defer></script>
 </head>
 
 <body>
@@ -68,21 +68,5 @@
    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-   <script>
-      if('serviceWorker' in navigator) {
-          window.addEventListiner('load', () => {
-              navigator.serviceWorker.register('sw.js')
-                  .then((registration) => { 
-                      console.log(`service worker registered succesfully ${registration}`) 
-                  })
-                  .catch((err) => {
-                      console.log(`Error registring ${err}`) 
-                  })
-          })
-      } else {
-          console.log(`Service worker is not supported in this browser.`)
-      }
-  </script>
 
 </body>
