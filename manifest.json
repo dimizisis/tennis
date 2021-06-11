@@ -3,12 +3,12 @@
   "name": "Tennis Player App",
   "icons": [
     {
-      "src": "tennis-player/icons/favicon.svg",
+      "src": "./icons/favicon.svg",
       "type": "image/x-icon",
       "sizes": "192x192"
     },
     {
-      "src": "tennis-player/images/icons/favicon.svg",
+      "src": "./images/icons/favicon.svg",
       "type": "image/x-icon",
       "sizes": "512x512"
     }
