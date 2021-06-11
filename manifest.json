@@ -3,17 +3,18 @@
   "name": "Tennis Player App",
   "icons": [
     {
-      "src": "images/icons/favicon.svg",
-      "type": "image/x-icon",
+      "src": "images/icons/favicon192.png",
+      "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "images/icons/favicon.svg",
-      "type": "image/x-icon",
+      "src": "images/icons/favicon.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
+  "start_url": "https://dimizisis.github.io/tennis-player/",
+  "scope": "https://dimizisis.github.io/tennis-player/",
   "background_color": "white",
   "display": "standalone",
   "description": "App for tennis player"
