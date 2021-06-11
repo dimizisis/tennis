@@ -5,8 +5,10 @@ self.addEventListener('install', function (event) {
             return cache.addAll([
                 './index.html',
                 './images/icons/favicon.svg',
-                './images/icons/favicon512.png',
-                './images/icons/favicon192.png',
+                './images/icons/icon-192x192.png',
+                './images/icons/icon-256x256.png',
+                './images/icons/icon-384x384.png',
+                './images/icons/icon-512x512.png',
                 './manifest.json',
                 './images/icons/facebook.svg',
                 './images/icons/instagram.svg',
@@ -24,10 +26,11 @@ self.addEventListener('install', function (event) {
     );
 });
 
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    fetch(event.request).catch(function() {
-      return caches.match(event.request);
-    })
-  );
+self.addEventListener('fetch', function (event) {
+    console.log('The service worker is serving the asset.');
+    event.respondWith(
+        caches.match(event.request).then(function (response) {
+            return response || caches.match('/index.html');
+        })
+    );
 });
