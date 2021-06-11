@@ -13,8 +13,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "https://dimizisis.github.io/tennis-player/",
-  "scope": "https://dimizisis.github.io/tennis-player/",
+  "start_url": "/",
+  "scope": "/",
   "background_color": "white",
   "display": "standalone",
   "description": "App for tennis player"
