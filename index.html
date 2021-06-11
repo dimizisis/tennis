@@ -69,11 +69,11 @@
    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
    <script>
-      if ("serviceWorker" in navigator) {
+      if ('serviceWorker' in navigator) {
         navigator.serviceWorker
-          .register("sw.js")
+          .register('./sw.js')
           .then(function (registration) {
-            console.log("success load");
+            console.log('success load');
           })
           .catch(function (err) {
             console.log(err);
