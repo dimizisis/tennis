@@ -3,20 +3,20 @@ self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open('tennis').then(function(cache) {
             return cache.addAll([
-                '/index.html',
-                '/images/icons/favicon.ico',
-                '/manifest.json',
-                '/images/icons/facebook.svg',
-                '/images/icons/instagram.svg',
-                '/images/icons/info.svg',
-                '/images/icons/invisible.svg',
-                '/images/icons/plus.svg',
-                '/images/icons/ranking.svg',
-                '/images/icons/remove.svg',
-                '/images/icons/stats.svg',
-                '/images/icons/twitter.svg',
-                '/images/icons/visible.svg',
-                '/js/index.js'
+                './index.html',
+                './images/icons/favicon.ico',
+                './manifest.json',
+                './images/icons/facebook.svg',
+                './images/icons/instagram.svg',
+                './images/icons/info.svg',
+                './images/icons/invisible.svg',
+                './images/icons/plus.svg',
+                './images/icons/ranking.svg',
+                './images/icons/remove.svg',
+                './images/icons/stats.svg',
+                './images/icons/twitter.svg',
+                './images/icons/visible.svg',
+                './js/index.js'
             ]);
         })
     );
