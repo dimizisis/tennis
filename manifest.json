@@ -1,20 +1,20 @@
 {
-    "short_name": "Tennis Player",
-    "name": "Tennis Player App",
-    "icons": [
-        {
-          "src": "/images/icons/favicon.svg",
-          "type": "image/x-icon",
-          "sizes": "192x192"
-        },
-        {
-          "src": "/images/icons/favicon.svg",
-          "type": "image/x-icon",
-          "sizes": "512x512"
-        }
-      ],
-      "start_url": "/",
-      "background_color": "white",
-      "display": "standalone",
-      "description": "Application for a tennis player"
+  "short_name": "Tennis Player",
+  "name": "Tennis Player App",
+  "icons": [
+    {
+      "src": "/images/icons/favicon.svg",
+      "type": "image/x-icon",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icons/favicon.svg",
+      "type": "image/x-icon",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "white",
+  "display": "standalone",
+  "description": "App for tennis player"
 }
