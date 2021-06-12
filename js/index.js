@@ -178,18 +178,21 @@ class Ranking {
   }
 }
 
-(async () => {
-  await import('https://cdn.amcharts.com/lib/4/core.js');
-})();
+const loadCDN = src =>
+  new Promise((resolve, reject) => {
+    if (document.querySelector('head > script[src="${src}"]') !== null) return resolve();
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.head.appendChild(script);
+    script.onload = resolve;
+    script.onerror = reject;
+  })
 
-(async () => {
-  await import('https://cdn.amcharts.com/lib/4/charts.js');
-})();
 
-(async () => {
-  await import('https://cdn.amcharts.com/lib/4/themes/animated.js');
-})();
-
+loadCDN('https://cdn.amcharts.com/lib/4/core.js').then(res => { }).catch(err => { });
+loadCDN('https://cdn.amcharts.com/lib/4/charts.js').then(res => { }).catch(err => { });
+loadCDN('https://cdn.amcharts.com/lib/4/themes/animated.js').then(res => { }).catch(err => { });
 
 /* Player Initialization */
 var player = initializePlayer();
@@ -808,7 +811,7 @@ function setAutomaticCalculations() {
  * is triggered once at the begining (on load) & every time
  * a users adds rows to ranking table.
  */
- function addEventListenersToTds() {
+function addEventListenersToTds() {
   var cells = document.querySelectorAll('td');
   for (var i = 0; i < cells.length; ++i) {
     cells[i].addEventListener('keypress', function (e) {
