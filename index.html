@@ -17,10 +17,23 @@
 
 <body>
 
-   <!-- Needed for ranking chart (amchars library) -->
-   <script src="https://cdn.amcharts.com/lib/4/core.js?v234123"></script>
-   <script src="https://cdn.amcharts.com/lib/4/charts.js?v234123"></script>
-   <script src="https://cdn.amcharts.com/lib/4/themes/animated.js?v234123"></script>
+   <script src id="coreScript"></script>
+   <script type="text/javascript">
+      let resourcePath = 'https://cdn.amcharts.com/lib/4/core.js';
+      document.getElementById('coreScript').src = resourcePath + '?v=' + Date.now();
+   </script>
+
+   <script src id="chartsScript"></script>
+   <script type="text/javascript">
+      let resourcePath = 'https://cdn.amcharts.com/lib/4/charts.js';
+      document.getElementById('chartsScript').src = resourcePath + '?v=' + Date.now();
+   </script>
+
+   <script src id="animatedScript"></script>
+   <script type="text/javascript">
+      let resourcePath = 'https://cdn.amcharts.com/lib/4/themes/animated.js';
+      document.getElementById('animatedScript').src = resourcePath + '?v=' + Date.now();
+   </script>
 
    <!-- Header -->
    <section id="header">
