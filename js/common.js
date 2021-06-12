@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
 
 // Handle A2HS
 let deferredPrompt;
-const installBtn = document.getElementById('install');
+const installBtn = document.getElementById('navinstallbtn');
 
 window.addEventListener('beforeinstallprompt', function (ev) {
     // Prevent some older browsers from popping the install prompt
@@ -24,6 +24,7 @@ window.addEventListener('beforeinstallprompt', function (ev) {
     installBtn.style.visibility = 'visible';
 
     installBtn.addEventListener('click', function () {
+        console.log('clicked');
         // Show the prompt
         deferredPrompt.prompt();
         // Wait for the user to respond to the prompt
