@@ -1,7 +1,7 @@
 /* Typical properties start */
 @font-face {
 	font-family: "Source Sans Pro";
-	src: url("https://fonts.gstatic.com/s/sourcesanspro/v13/6xK3dSBYKcSV-LCoeQqfX1RYOo3qO67lqDY.woff2") format('woff2');
+	src: url("https://fonts.gstatic.com/s/sourcesanspro/v13/6xK3dSBYKcSV-LCoeQqfX1RYOo3qO67lqDY.woff2");
 	font-display: swap;
 }
 
@@ -33,11 +33,9 @@ body {
 }
 
 img {
-	line-height: 50px;
     display: flex;
     justify-content: space-between;
     width: fit-content;
-	text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
