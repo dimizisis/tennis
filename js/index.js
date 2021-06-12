@@ -258,8 +258,7 @@ function displayPlayerRanking() {
 
   addRowImg.addEventListener('click', insertRankingRow);
   addRowImg.addEventListener('click', saveRankingToLocalStorage);
-  if (navigator.onLine)
-    addRowImg.addEventListener('click', loadRankingChart);
+  addRowImg.addEventListener('click', loadRankingChart);
   addRowImg.addEventListener('click', addEventListenersToTds);
 
   tableDiv.appendChild(rankingHeaderDiv);
@@ -392,8 +391,7 @@ function createRankingTable(tableId, header) {
     removeRowImg.classList.add('remove-img');
     removeRowImg.addEventListener('click', function () {
       document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
-      if (navigator.onLine)
-        loadRankingChart();
+      loadRankingChart();
       saveRankingToLocalStorage();
     });
 
@@ -430,8 +428,7 @@ function insertRankingRow() {
   removeRowImg.tagName = 'deleterow';
   removeRowImg.addEventListener('click', function () {
     document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
-    if (navigator.onLine)
-      loadRankingChart();
+    loadRankingChart();
     saveRankingToLocalStorage();
   });
 
@@ -798,7 +795,7 @@ function setAutomaticCalculations() {
  * is triggered once at the begining (on load) & every time
  * a users adds rows to ranking table.
  */
- function addEventListenersToTds() {
+function addEventListenersToTds() {
   var cells = document.querySelectorAll('td');
   for (var i = 0; i < cells.length; ++i) {
     cells[i].addEventListener('keypress', function (e) {
@@ -806,8 +803,8 @@ function setAutomaticCalculations() {
         saveDataToLocalStorage(this);
         this.contentEditable = false;
         if (document.getElementById('ranking-by-year-table').contains(this)) {
-          if (navigator.onLine)
-            loadRankingChart();
+
+          loadRankingChart();
         }
       }
     });
@@ -815,8 +812,8 @@ function setAutomaticCalculations() {
       saveDataToLocalStorage(this);
       this.contentEditable = false;
       if (document.getElementById('ranking-by-year-table').contains(this)) {
-        if (navigator.onLine)
-          loadRankingChart();
+
+        loadRankingChart();
       }
     });
     cells[i].addEventListener('dblclick', function (e) {
@@ -890,8 +887,8 @@ window.addEventListener('load', addSortingEventListeners);
 /* Add column visibility listeners */
 window.addEventListener('load', addVisibilityEventListeners);
 
-if (navigator.onLine)
-  window.addEventListener('load', loadRankingChart);
+
+window.addEventListener('load', loadRankingChart);
 
 /* Add listeners to table cells (making them editable) */
 window.addEventListener('load', addEventListenersToTds);
