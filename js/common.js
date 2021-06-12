@@ -31,5 +31,3 @@ window.addEventListener('appinstalled', function () {
     deferredPrompt = null;
     console.log('app installed');
 });
-
-var myApp = {};

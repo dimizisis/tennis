@@ -27,11 +27,6 @@ self.addEventListener('install', function (event) {
     );
 });
 
-self.addEventListener('fetch', function (event) {
-    console.log('The service worker is serving the asset.');
-    event.respondWith(
-        caches.match(event.request).then(function (response) {
-            return response || caches.match('/index.html');
-        })
-    );
-});
+self.addEventListener('fetch', function(event) {
+    event.respondWith(fetch(event.request));
+  });
