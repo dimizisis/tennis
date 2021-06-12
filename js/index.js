@@ -178,22 +178,6 @@ class Ranking {
   }
 }
 
-const loadCDN = src =>
-  new Promise((resolve, reject) => {
-    if (document.querySelector('head > script[src="${src}"]') !== null) return resolve();
-    const script = document.createElement('script');
-    script.src = src;
-    script.async = true;
-    document.head.appendChild(script);
-    script.onload = resolve;
-    script.onerror = reject;
-  })
-
-
-loadCDN('https://cdn.amcharts.com/lib/4/core.js').then(res => { }).catch(err => { });
-loadCDN('https://cdn.amcharts.com/lib/4/charts.js').then(res => { }).catch(err => { });
-loadCDN('https://cdn.amcharts.com/lib/4/themes/animated.js').then(res => { }).catch(err => { });
-
 /* Player Initialization */
 var player = initializePlayer();
 
