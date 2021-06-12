@@ -20,7 +20,8 @@ self.addEventListener('install', function (event) {
                 './images/icons/stats.svg',
                 './images/icons/twitter.svg',
                 './images/icons/visible.svg',
-                './js/index.js'
+                './js/index.js',
+                './js/common.js'
             ]);
         })
     );
