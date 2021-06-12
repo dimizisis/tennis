@@ -23,9 +23,9 @@ self.addEventListener('install', function (event) {
                 './images/icons/visible.svg',
                 './js/index.js',
                 './js/common.js',
-                'https://cdn.amcharts.com/lib/4/core.js',
-                'https://cdn.amcharts.com/lib/4/charts.js',
-                'https://cdn.amcharts.com/lib/4/themes/animated.js'
+                'https://cdn.amcharts.com/lib/4/core.js?dummy=d',
+                'https://cdn.amcharts.com/lib/4/charts.js?dummy=d',
+                'https://cdn.amcharts.com/lib/4/themes/animated.js?dummy=d'
             ]);
         })
     );
