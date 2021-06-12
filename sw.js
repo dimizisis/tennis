@@ -10,6 +10,7 @@ self.addEventListener('install', function (event) {
                 './images/icons/icon-256x256.png',
                 './images/icons/icon-384x384.png',
                 './images/icons/icon-512x512.png',
+                './images/icons/icon-180x180.png',
                 './manifest.json',
                 './images/icons/facebook.svg',
                 './images/icons/instagram.svg',
