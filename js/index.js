@@ -178,6 +178,19 @@ class Ranking {
   }
 }
 
+(async () => {
+  await import('https://cdn.amcharts.com/lib/4/core.js');
+})();
+
+(async () => {
+  await import('https://cdn.amcharts.com/lib/4/charts.js');
+})();
+
+(async () => {
+  await import('https://cdn.amcharts.com/lib/4/themes/animated.js');
+})();
+
+
 /* Player Initialization */
 var player = initializePlayer();
 
