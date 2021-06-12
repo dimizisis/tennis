@@ -257,7 +257,8 @@ function displayPlayerRanking() {
 
   addRowImg.addEventListener('click', insertRankingRow);
   addRowImg.addEventListener('click', saveRankingToLocalStorage);
-  addRowImg.addEventListener('click', loadRankingChart);
+  if (navigator.onLine)
+    addRowImg.addEventListener('click', loadRankingChart);
   addRowImg.addEventListener('click', addEventListenersToTds);
 
   tableDiv.appendChild(rankingHeaderDiv);
@@ -390,7 +391,8 @@ function createRankingTable(tableId, header) {
     removeRowImg.classList.add('remove-img');
     removeRowImg.addEventListener('click', function () {
       document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
-      loadRankingChart();
+      if (navigator.onLine)
+        loadRankingChart();
       saveRankingToLocalStorage();
     });
 
@@ -426,7 +428,8 @@ function insertRankingRow() {
   removeRowImg.src = './images/icons/remove.svg';
   removeRowImg.addEventListener('click', function () {
     document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
-    loadRankingChart();
+    if (navigator.onLine)
+      loadRankingChart();
     saveRankingToLocalStorage();
   });
 
@@ -801,7 +804,8 @@ function setAutomaticCalculations() {
         saveDataToLocalStorage(this);
         this.contentEditable = false;
         if (document.getElementById('ranking-by-year-table').contains(this)) {
-          loadRankingChart();
+          if (navigator.onLine)
+            loadRankingChart();
         }
       }
     });
@@ -809,7 +813,8 @@ function setAutomaticCalculations() {
       saveDataToLocalStorage(this);
       this.contentEditable = false;
       if (document.getElementById('ranking-by-year-table').contains(this)) {
-        loadRankingChart();
+        if (navigator.onLine)
+          loadRankingChart();
       }
     });
     cells[i].addEventListener('dblclick', function (e) {
@@ -883,7 +888,8 @@ window.addEventListener('load', addSortingEventListeners);
 /* Add column visibility listeners */
 window.addEventListener('load', addVisibilityEventListeners);
 
-window.addEventListener('load', loadRankingChart);
+if (navigator.onLine)
+  window.addEventListener('load', loadRankingChart);
 
 /* Add listeners to table cells (making them editable) */
 window.addEventListener('load', addEventListenersToTds);
