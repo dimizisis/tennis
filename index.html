@@ -1,66 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="theme-color" content="#4285f4">
-  <meta name="description" content="Application to keep your tennis data.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./index.css">
-  <link rel="shortcut icon" href="./images/icons/favicon.svg" type="image/x-icon">
-  <link rel="apple-touch-icon" sizes="180x180" href="./images/icons/icon-180x180.png">
-  <link rel="manifest" href="./manifest.json" />
-  <title>Tennis Website</title>
-  <script src="./js/index.js" defer></script>
-  <script src="./js/common.js" defer></script>
+   <meta charset="UTF-8">
+   <meta name="theme-color" content="#4285f4">
+   <meta name="description" content="Application to keep your tennis data.">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="./index.css">
+   <link rel="shortcut icon" href="./images/icons/favicon.svg" type="image/x-icon">
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/icons/icon-180x180.png">
+   <link rel="manifest" href="./manifest.json" />
+   <title>Tennis Website</title>
+   <script src="./js/index.js" defer></script>
+   <script src="./js/common.js" defer></script>
 </head>
 
 <body>
-    <!-- Header -->
-    <section id="header">
+   <!-- Header -->
+   <section id="header">
       <div id="navbar" class="topnav">
          <a id="navhomebtn" class="navbtn active" href="#header">Home</a>
          <a id="navinfobtn" class="navbtn" href="#info">Basic Information</a>
          <a id="navstatsbtn" class="navbtn" href="#stats">Statistics</a>
          <a id="navrankbtn" class="navbtn" href="#ranking">Ranking</a>
          <a id="navfooterbtn" class="navbtn" href="#footer">Contact</a>
-       </div>
-    </section>
-    <!-- End Header -->
+      </div>
+   </section>
+   <!-- End Header -->
 
-    <!-- Cover -->
-    <section id="cover">
-        <div>
-         <input id="imginput" type='file' />
-         <br><img id="playerimg" src="#">
-        </div>
-        <div>
-            <h1 id="maintitle"><span></span></h1>
-        </div>
-    </section>
-    <!-- End Cover -->
+   <!-- Cover -->
+   <section id="cover">
+      <div>
+         <label>
+            <input id="imginput" type='file' />
+         </label>
+         <br><img id="playerimg" src="#" alt="player">
+      </div>
+      <div>
+         <h1 id="maintitle"><span></span></h1>
+      </div>
+   </section>
+   <!-- End Cover -->
 
-    <!-- Rank Chart -->
-    <section id="rankchart">
-       <div><h3>Ranking Chart</h3></div>
+   <!-- Rank Chart -->
+   <section id="rankchart">
+      <div>
+         <h3>Ranking Chart</h3>
+      </div>
       <div id="chartdiv"></div>
-    </section>
-    <!-- End Rank Chart -->
+   </section>
+   <!-- End Rank Chart -->
 
-    <!-- Footer -->
-  <section id="footer">
+   <!-- Footer -->
+   <section id="footer">
       <h1>Follow me on social media</h1>
       <div class="footer">
          <div class="social-icon">
             <div id="fb" class="social-item tooltip">
-               <a id="facebook-target" target="_blank" href=""><img id="facebook" class="social-img active" src="./images/icons/facebook.svg" alt="fb"></a>
+               <a id="facebook-target" target="_blank"><img id="facebook" class="social-img active"
+                     src="./images/icons/facebook.svg" alt="fb"></a>
                <span class="tooltiptext">Facebook</span>
             </div>
-         <div id="insta" class="social-item tooltip">
-            <a id="instagram-target" target="_blank" href=""><img id="instagram" class="social-img active" src="./images/icons/instagram.svg" alt="instagram"></a>
-            <span class="tooltiptext">Instagram</span>
-         </div>
+            <div id="insta" class="social-item tooltip">
+               <a id="instagram-target" target="_blank"><img id="instagram" class="social-img active"
+                     src="./images/icons/instagram.svg" alt="instagram"></a>
+               <span class="tooltiptext">Instagram</span>
+            </div>
             <div id="twitter" class="social-item tooltip">
-               <a id="twitter-target" target="_blank" href=""><img id="twitter" class="social-img active" src="./images/icons/twitter.svg" alt="twitter"></a>
+               <a id="twitter-target" target="_blank"><img id="twitter" class="social-img active"
+                     src="./images/icons/twitter.svg" alt="twitter"></a>
                <span class="tooltiptext">Twitter</span>
             </div>
          </div>

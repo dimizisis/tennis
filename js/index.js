@@ -253,6 +253,7 @@ function displayPlayerRanking() {
   let [rankingTable, rankingHeaderDiv] = createRankingTable('ranking-by-year-table', 'General');
   let addRowImg = document.createElement('img');
   addRowImg.id = 'add-row-img'
+  addRowImg.alt = 'add';
   addRowImg.src = './images/icons/plus.svg';
 
   addRowImg.addEventListener('click', insertRankingRow);
@@ -388,6 +389,7 @@ function createRankingTable(tableId, header) {
     let removeRowImg = document.createElement('img');
     removeRowImg.src = './images/icons/remove.svg';
     removeRowImg.classList.add('remove-img');
+    removeRowImg.alt = 'remove';
     removeRowImg.addEventListener('click', function () {
       document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
       loadRankingChart();
