@@ -1,7 +1,7 @@
 self.addEventListener('install', function (event) {
     console.log('The service worker is being installed.');
     event.waitUntil(
-        caches.open('tennis').then(function(cache) {
+        caches.open('tennis').then(function (cache) {
             return cache.addAll([
                 './index.html',
                 './images/icons/favicon.svg',
@@ -27,6 +27,10 @@ self.addEventListener('install', function (event) {
     );
 });
 
-self.addEventListener('fetch', function(event) {
-    event.respondWith(fetch(event.request));
-  });
+self.addEventListener('fetch', function (event) {
+    event.respondWith(
+        caches.match(event.request).then(function (response) {
+            return response || fetch(event.request);
+        })
+    );
+});
