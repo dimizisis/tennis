@@ -254,7 +254,6 @@ function displayPlayerRanking() {
   let addRowImg = document.createElement('img');
   addRowImg.id = 'add-row-img'
   addRowImg.src = './images/icons/plus.svg';
-  addRowImg.tagName = 'addrow';
 
   addRowImg.addEventListener('click', insertRankingRow);
   addRowImg.addEventListener('click', saveRankingToLocalStorage);
@@ -425,7 +424,6 @@ function insertRankingRow() {
   var removeRowImg = document.createElement('img');
   removeRowImg.className = 'remove-img';
   removeRowImg.src = './images/icons/remove.svg';
-  removeRowImg.tagName = 'deleterow';
   removeRowImg.addEventListener('click', function () {
     document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
     loadRankingChart();
@@ -795,7 +793,7 @@ function setAutomaticCalculations() {
  * is triggered once at the begining (on load) & every time
  * a users adds rows to ranking table.
  */
-function addEventListenersToTds() {
+ function addEventListenersToTds() {
   var cells = document.querySelectorAll('td');
   for (var i = 0; i < cells.length; ++i) {
     cells[i].addEventListener('keypress', function (e) {
@@ -803,7 +801,6 @@ function addEventListenersToTds() {
         saveDataToLocalStorage(this);
         this.contentEditable = false;
         if (document.getElementById('ranking-by-year-table').contains(this)) {
-
           loadRankingChart();
         }
       }
@@ -812,7 +809,6 @@ function addEventListenersToTds() {
       saveDataToLocalStorage(this);
       this.contentEditable = false;
       if (document.getElementById('ranking-by-year-table').contains(this)) {
-
         loadRankingChart();
       }
     });
@@ -886,7 +882,6 @@ window.addEventListener('load', addSortingEventListeners);
 
 /* Add column visibility listeners */
 window.addEventListener('load', addVisibilityEventListeners);
-
 
 window.addEventListener('load', loadRankingChart);
 
