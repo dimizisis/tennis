@@ -4,6 +4,7 @@
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch(function (error) {
         // registration failed
+        console.log('registration failed');
     });
 }
 
@@ -11,7 +12,8 @@ if ('serviceWorker' in navigator) {
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', function (ev) {
-   
+    
+    console.log('triggered beforeinstallprompt');
     ev.preventDefault();
     deferredPrompt = ev;
     deferredPrompt.prompt();
@@ -24,6 +26,7 @@ window.addEventListener('beforeinstallprompt', function (ev) {
 
 window.addEventListener('appinstalled', function () {
     deferredPrompt = null;
+    console.log('app installed');
 });
 
 var myApp = {};
