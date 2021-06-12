@@ -254,6 +254,7 @@ function displayPlayerRanking() {
   let addRowImg = document.createElement('img');
   addRowImg.id = 'add-row-img'
   addRowImg.src = './images/icons/plus.svg';
+  addRowImg.tagName = 'addrow';
 
   addRowImg.addEventListener('click', insertRankingRow);
   addRowImg.addEventListener('click', saveRankingToLocalStorage);
@@ -426,6 +427,7 @@ function insertRankingRow() {
   var removeRowImg = document.createElement('img');
   removeRowImg.className = 'remove-img';
   removeRowImg.src = './images/icons/remove.svg';
+  removeRowImg.tagName = 'deleterow';
   removeRowImg.addEventListener('click', function () {
     document.getElementById('ranking-by-year-table').deleteRow(this.parentElement.rowIndex);
     if (navigator.onLine)
