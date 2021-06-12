@@ -30,25 +30,13 @@ self.addEventListener('install', function (event) {
             ]);
         })
     );
-
-    event.registerForeignFetch({
-        scopes: [self.registration.scope], // or some sub-scope
-        origins: ['*'] // or ['https://example.com']
-      });
 });
 
 self.addEventListener('fetch', function (event) {
     console.log('The service worker is serving the asset.');
-    event.respondWith(fetch(event.request));
-});
-
-self.addEventListener('foreignfetch', event => {
-    // The new Request will have credentials omitted by default.
-    const noCredentialsRequest = new Request(event.request.url);
     event.respondWith(
-      // Replace with your own request logic as appropriate.
-      fetch(noCredentialsRequest)
-        .catch(() => caches.match(noCredentialsRequest))
-        .then(response => ({response}))
+        caches.match(event.request).then(function (response) {
+            return response || caches.match('/tennis/index.html');
+        })
     );
-  });
+});
