@@ -11,7 +11,6 @@ if ('serviceWorker' in navigator) {
         });
 }
 
-const installBtn = document.getElementById('install');
 let installPromptEvent;
 
 window.addEventListener('beforeinstallprompt', (event) => {
@@ -20,9 +19,6 @@ window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     // Stash the event so it can be triggered later.
     installPromptEvent = event;
-    // Update the install UI to notify the user app can be installed
-
-    document.getElementById('install').disabled = true;
     // Show the modal add to home screen dialog
     installPromptEvent.prompt();
     // Wait for the user to respond to the prompt
