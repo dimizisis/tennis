@@ -28,9 +28,10 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+    console.log('The service worker is serving the asset.');
     event.respondWith(
         caches.match(event.request).then(function (response) {
-            return response || fetch(event.request);
+            return response || caches.match('/tennis/index.html');
         })
     );
 });
