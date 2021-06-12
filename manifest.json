@@ -3,7 +3,7 @@
   "background_color": "#f69435",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/tennis",
   "name": "Tennis Player App",
   "short_name": "Tennis Player",
   "description": "Application for tennis players",
