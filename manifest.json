@@ -2,7 +2,7 @@
   "theme_color": "#f69435",
   "background_color": "#f69435",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/tennis/",
   "start_url": "/tennis/",
   "name": "Tennis Player App",
   "short_name": "Tennis Player",
