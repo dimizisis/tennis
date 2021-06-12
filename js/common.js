@@ -11,36 +11,34 @@ if ('serviceWorker' in navigator) {
         });
 }
 
-// Handle A2HS
-let deferredPrompt;
 const installBtn = document.getElementById('install');
+let installPromptEvent;
 
 window.addEventListener('beforeinstallprompt', (event) => {
-    console.log('👍', 'beforeinstallprompt', event);
-    // Stash the event so it can be triggered later.
-    window.deferredPrompt = event;
-    // Remove the 'hidden' class from the install button container
-    installBtn.classList.toggle('hidden', false);
-  });
-
-installBtn.addEventListener('click', async () => {
-    console.log('👍', 'butInstall-clicked');
-    const promptEvent = window.deferredPrompt;
-    if (!promptEvent) {
-        // The deferred prompt isn't available.
-        return;
-    }
-    // Show the install prompt.
-    promptEvent.prompt();
-    // Log the result
-    const result = await promptEvent.userChoice;
-    console.log('👍', 'userChoice', result);
-    // Reset the deferred prompt variable, since
-    // prompt() can only be called once.
-    window.deferredPrompt = null;
-    // Hide the install button.
-    installBtn.classList.toggle('hidden', true);
+  // Prevent Chrome <= 67 from automatically showing the prompt
+  event.preventDefault();
+  // Stash the event so it can be triggered later.
+  installPromptEvent = event;
+  // Update the install UI to notify the user app can be installed
+  document.getElementById('install').disabled = false;
 });
+
+installBtn.addEventListener('click', () => {
+    // Update the install UI to remove the install button
+    document.getElementById('install').disabled = true;
+    // Show the modal add to home screen dialog
+    installPromptEvent.prompt();
+    // Wait for the user to respond to the prompt
+    installPromptEvent.userChoice.then((choice) => {
+      if (choice.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+      // Clear the saved prompt since it can't be used again
+      installPromptEvent = null;
+    });
+  });
 
 window.addEventListener('appinstalled', (event) => {
     console.log('👍', 'appinstalled', event);
