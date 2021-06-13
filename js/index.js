@@ -867,8 +867,6 @@ window.addEventListener('load', function () {
   });
 });
 
-window.addEventListener('load', loadScripts);
-
 /* Load main title (if exists) */
 window.addEventListener('load', loadMainTitle);
 
@@ -902,20 +900,6 @@ window.addEventListener('load', addEventListenersToSocialMedia);
 
 /* When the user scrolls the page, execute keepNavBar */
 window.addEventListener('scroll', keepNavBar);
-
-function loadScripts() {
-  var core = document.createElement('script');
-  core.src = 'https://cdn.amcharts.com/lib/4/core.js' + '?ts=' + new Date().getTime();
-  document.getElementsByTagName('head')[0].appendChild(core);
-
-  var charts = document.createElement('script');
-  charts.src = 'https://cdn.amcharts.com/lib/4/charts.js' + '?ts=' + new Date().getTime();
-  document.getElementsByTagName('head')[0].appendChild(charts);
-
-  var animated = document.createElement('script');
-  animated.src = 'https://cdn.amcharts.com/lib/4/themes/animated.js' + '?ts=' + new Date().getTime();
-  document.getElementsByTagName('head')[0].appendChild(animated);
-}
 
 /* Change active status when a navigation bar button is clicked */
 Array.from(document.getElementsByClassName('navbtn')).forEach(element => {
