@@ -23,6 +23,9 @@ self.addEventListener('install', function (event) {
                 './images/icons/twitter.svg',
                 './images/icons/visible.svg',
                 './js/index.js',
+                './js/core.js',
+                './js/charts.js',
+                './js/animated.js',
                 './js/common.js'
             ]);
         })
