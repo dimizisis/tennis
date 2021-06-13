@@ -867,6 +867,8 @@ window.addEventListener('load', function () {
   });
 });
 
+window.addEventListener('load', loadScripts);
+
 /* Load main title (if exists) */
 window.addEventListener('load', loadMainTitle);
 
@@ -897,8 +899,6 @@ window.addEventListener('load', addEventListenerToMainTitle);
 window.addEventListener('load', setAutomaticCalculations);
 
 window.addEventListener('load', addEventListenersToSocialMedia);
-
-window.addEventListener('load', loadScripts);
 
 /* When the user scrolls the page, execute keepNavBar */
 window.addEventListener('scroll', keepNavBar);
