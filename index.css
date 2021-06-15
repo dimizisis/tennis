@@ -40,6 +40,11 @@ img {
     margin-right: auto;
 }
 
+#playerimg {
+    line-height: normal;
+    text-align: center;
+}
+
 .remove-img {
 	padding: 1rem;
 	height: 1rem;
